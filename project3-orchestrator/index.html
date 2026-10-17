@@ -1,1 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enterprise Support Orchestrator (Multi-Channel & HITL Engine)</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Top Header & Metrics Bar -->
+        <header class="top-bar">
+            <div>
+                <h1>⚙️ Enterprise Support Orchestrator</h1>
+                <p class="subtitle">Multi-Channel Async Ingestion & Human-in-the-Loop Routing Engine</p>
+            </div>
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <span class="metric-label">Total Ingested</span>
+                    <span id="stat-total" class="metric-value">0</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Auto-Resolved</span>
+                    <span id="stat-auto" class="metric-value success-val">0</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-label">Human Escalated</span>
+                    <span id="stat-escalated" class="metric-value danger-val">0</span>
+                </div>
+            </div>
+        </header>
 
+        <!-- Main Work Area -->
+        <div class="dashboard-grid">
+            <!-- Left Panel: Ticket Simulator / Ingestion -->
+            <aside class="panel ingestion-panel">
+                <h2>📥 Ingestion Gateway</h2>
+                <p class="panel-desc">Simulate inbound tickets across channels or submit a custom query.</p>
+                
+                <div class="quick-sim-buttons">
+                    <button class="sim-btn" onclick="simulateTicket('web')">🌐 Web Chat Ticket</button>
+                    <button class="sim-btn" onclick="simulateTicket('email')">✉️ Email Inquiry</button>
+                    <button class="sim-btn danger-sim" onclick="simulateTicket('urgent')">🔥 Urgent Escalation</button>
+                </div>
+
+                <div class="custom-ingest-form">
+                    <h3>Custom Ticket Ingestion</h3>
+                    <select id="ticket-channel">
+                        <option value="Web Chat">Channel: Web Chat</option>
+                        <option value="Email">Channel: Email</option>
+                        <option value="Slack">Channel: Slack</option>
+                    </select>
+                    <textarea id="ticket-text" placeholder="Type customer message here... (e.g., 'I will sue if my billing issue isn't fixed!')" rows="4"></textarea>
+                    <button id="submit-ticket-btn">Process Inbound Ticket</button>
+                </div>
+            </aside>
+
+            <!-- Middle Panel: Live Escalation Queues -->
+            <section class="panel queue-panel">
+                <h2>🚨 Live Routing Queues</h2>
+                
+                <div class="queue-section">
+                    <h3><span class="badge auto-badge">AI Auto-Resolved</span> Queue</h3>
+                    <div id="auto-queue" class="queue-list">
+                        <div class="empty-placeholder">No tickets in auto-resolved queue yet.</div>
+                    </div>
+                </div>
+
+                <div class="queue-section">
+                    <h3><span class="badge human-badge">Human-in-the-Loop Escalated</span> Queue</h3>
+                    <div id="escalated-queue" class="queue-list">
+                        <div class="empty-placeholder">No tickets escalated to live agents.</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Panel: Audit Trail & Sentiment Telemetry -->
+            <section class="panel ledger-panel">
+                <h2>📊 Telemetry & Audit Ledger</h2>
+                <div class="table-container">
+                    <table id="audit-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Channel</th>
+                                <th>Sentiment</th>
+                                <th>Urgency</th>
+                                <th>Confidence</th>
+                                <th>Action Path</th>
+                            </tr>
+                        </thead>
+                        <tbody id="audit-body">
+                            <!-- Ingested rows will appear here dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
